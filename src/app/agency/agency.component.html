@@ -4,8 +4,8 @@
       <md-card-header class='header'>
         <md-card-title class='heading'><h1>{{agency?.name}}</h1><span>{{agency?.tags}}</span></md-card-title>
         <md-chip-list>
-          <md-chip class='grade-chip' selected='true' color="{{getColor(agency.grade)}}">
-            {{agency?.grade}}
+          <md-chip selected='true' [style.backgroundColor]="getColor(agency.grade)">
+            <b>{{agency?.grade}}</b>
           </md-chip>
       </md-chip-list>
       </md-card-header>
