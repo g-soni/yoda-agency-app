@@ -2,11 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AgencyService } from './agency.service';
 import { NgForm } from '@angular/forms';
 import { Agency } from './agency';
+import { MdSnackBar } from '@angular/material';
 
 @Component({
   selector: 'agency-section',
   templateUrl: './agency.component.html',
-  styleUrls: ['./agency.component.css']
+  styleUrls: ['./agency.component.css'],
 })
 export class AgencyComponent implements OnInit {
 
@@ -14,29 +15,50 @@ export class AgencyComponent implements OnInit {
   agencies: Agency[] = [];
   errorMessage: any;
   agency: Agency;
+  filter: any;
 
   @ViewChild('agencyForm') public agencyForm: NgForm;
    
-  constructor(private agencyService: AgencyService) {
-    this.grades = [{id: 0, value: 'Padawan', color: '#E7451E'}, {id: 1, value: 'Jedi', color: '#F59A0E'}, {id: 2, value: 'Master', color: '#2DDC38'}];
+  constructor(private agencyService: AgencyService, private snackBar: MdSnackBar) {
+    this.grades = agencyService.grades;
     this.agency = new Agency();
+    this.filter = {name: '', tag: ''};
   }
 
   ngOnInit() {
-    this.agencyService.getAgencies()
-                      .subscribe(
-                        agencies => this.agencies = agencies,
-                        error =>  this.errorMessage = <any>error);
+    this.searchAgencies(null);
   }
 
+  
   saveAgency(agency:any):void {
-    console.log(this.agencyForm.valid);
     this.agencyService.createAgency(this.agency)
                       .subscribe(
                         data => {
-                          this.agencies.push(data);
+                            this.snackBar.open('Agency Created', '', {
+                            duration: 2000,
+                          });
+                          this.filter = {name: '', tag: ''};
+                          this.searchAgencies(this.filter);
+                  
                         },
-                        error =>  this.errorMessage = <any>error);
+                        error =>  {
+                          this.errorMessage = <any>error;
+                          this.snackBar.open(this.errorMessage, '', {
+                            duration: 2000,
+                          });
+                        });
+  }
+
+  searchAgencies(filter:any):void {
+    this.agencyService.getAgencies(this.filter)
+                      .subscribe(
+                        agencies => this.agencies = agencies,
+                        error =>  {
+                          this.errorMessage = <any>error;
+                          this.snackBar.open(this.errorMessage, '', {
+                            duration: 2000,
+                          });
+                        });
   }
 
   getColor(grade: any):void {

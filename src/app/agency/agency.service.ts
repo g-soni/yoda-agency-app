@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -10,11 +10,21 @@ import { Agency } from './agency';
 export class AgencyService {
 
   private agencyUrl = environment.apiUrl + '/api/agencies.json';
+  grades;
   
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    this.grades = [{id: 0, value: 'Padawan', color: '#E7451E'}, {id: 1, value: 'Jedi', color: '#F59A0E'}, {id: 2, value: 'Master', color: '#2DDC38'}];
+  }
 
-  getAgencies(): Observable<Agency[]> {
-    return this.http.get(this.agencyUrl)
+  getAgencies(filter: any): Observable<Agency[]> {
+    let params = new URLSearchParams();
+    for (var key in filter) {
+      if (filter.hasOwnProperty(key)) {
+        let val = filter[key];
+        params.set(key, val);
+      }
+    }
+    return this.http.get(this.agencyUrl, { search: params })
                     .map((res:Response) => res.json())
                     .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }
@@ -26,5 +36,4 @@ export class AgencyService {
                     .map((res:Response) => res.json().agency)
                     .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }
-
 }
