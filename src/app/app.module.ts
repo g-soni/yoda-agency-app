@@ -3,29 +3,27 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { UIRouterModule } from "@uirouter/angular";
 import { MaterialModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { AgencyComponent } from './agency/agency.component';
 import { AgencyService } from './agency/agency.service';
-
-let agencyState = { name: "agency", redirectTo: "/",  component: AgencyComponent }; 
+import { sortByGradePipe } from './agency/sort-by-grade.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AgencyComponent
+    AgencyComponent,
+    sortByGradePipe,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     MaterialModule,
-    NoopAnimationsModule,
-    UIRouterModule.forRoot({ states: [ agencyState ], useHash: true })
+    NoopAnimationsModule
   ],
-  providers: [AgencyService],
+  providers: [AgencyService, sortByGradePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
