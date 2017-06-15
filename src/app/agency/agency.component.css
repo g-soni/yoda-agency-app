@@ -1,0 +1,38 @@
+.agency-input-container {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.agency-list-block {
+  float: left;
+  width: 65%;
+}
+.agency-list {
+  margin: 20px 0 40px 0;
+  padding: 0;
+}
+.agency-form {
+  width: 33%;
+  float: right;
+  margin-top: 20px;
+}
+/deep/.mat-card-header-text {
+  width: 90%;
+}
+/deep/.mat-chip-list {
+  padding: 15px 15px 0 0;
+}
+/deep/.mat-card-content {
+  padding: 20px;
+}
+.header {
+  background-color: #E3DFDE;
+}
+.heading h1 {
+  float: left;
+  margin-right: 5px;
+}
+.heading span {
+  float: left;
+  margin-top: 30px;
+  color: gray;
+}

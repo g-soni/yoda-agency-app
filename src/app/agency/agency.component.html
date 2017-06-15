@@ -1,0 +1,53 @@
+<md-toolbar color="primary">Yoda Agency</md-toolbar>
+  <div class="agency-list-block">
+    <md-card class='agency-list' *ngFor="let agency of agencies">
+      <md-card-header class='header'>
+        <md-card-title class='heading'><h1>{{agency?.name}}</h1><span>{{agency?.tags}}</span></md-card-title>
+        <md-chip-list>
+          <md-chip class='grade-chip' selected='true' color="{{getColor(agency.grade)}}">
+            {{agency?.grade}}
+          </md-chip>
+      </md-chip-list>
+      </md-card-header>
+      <md-card-content>
+        {{agency?.description}}
+      </md-card-content>
+      <md-card-actions>
+      </md-card-actions>
+    </md-card>
+  </div>
+  <div class="agency-form">
+    <md-card>
+      <md-card-header>
+
+      </md-card-header>
+      <md-card-content>
+        <form #agencyForm="ngForm" (ngSubmit)="saveAgency()">
+          <legend>Name</legend>
+          <md-input-container class="agency-input-container" floatPlaceholder="never">
+            <input mdInput placeholder="Agency's name" [(ngModel)]='agency.name' name='agency_name' required>
+          </md-input-container>
+
+          <legend>Description</legend>
+          <md-input-container class="agency-input-container" floatPlaceholder='never'>
+            <textarea mdInput placeholder="Agency's description" [(ngModel)]='agency.description' name='agency_description' required></textarea>
+          </md-input-container>
+
+          <legend>Tags</legend>
+          <md-input-container hintLabel="Separate by a comma" class="agency-input-container" floatPlaceholder='never'>
+            <input mdInput placeholder="Tags" [(ngModel)]='agency.tags' name='agency_tags' required>
+          </md-input-container>
+
+          <legend>Grade</legend>
+          <md-select placeholder="- Select Grade -" [(ngModel)]="agency.grade" name="grade" floatPlaceholder='never' class="agency-input-container" required>
+            <md-option *ngFor="let grade of grades" [value]="grade.id">
+              {{grade.value}}
+            </md-option>
+          </md-select>
+          <button type="submit" md-raised-button color="primary" [disabled]="!agencyForm.form.valid">Create</button>
+        </form>
+      </md-card-content>
+      <md-card-actions>
+      </md-card-actions>
+    </md-card>
+</div>
