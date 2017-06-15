@@ -1,8 +1,8 @@
 <md-toolbar color="primary">Yoda Agency</md-toolbar>
   <div class="agency-list-block">
-    <md-card class='agency-list' *ngFor="let agency of agencies">
+    <md-card class='agency-list' *ngFor="let agency of agencies | sortByGrade">
       <md-card-header class='header'>
-        <md-card-title class='heading'><h1>{{agency?.name}}</h1><span>{{agency?.tags}}</span></md-card-title>
+        <md-card-title class='heading'><h1>{{agency?.name}}</h1><span>{{agency?.tag_list}}</span></md-card-title>
         <md-chip-list>
           <md-chip selected='true' [style.backgroundColor]="getColor(agency.grade)">
             <b>{{agency?.grade}}</b>
@@ -17,9 +17,29 @@
     </md-card>
   </div>
   <div class="agency-form">
-    <md-card>
-      <md-card-header>
+    <md-card class='agency-form-card'>
+      <md-card-header class='form-header'>
+        <md-card-title class='heading'><h3>Filter your Agencies</h3></md-card-title>
+      </md-card-header>
+      <md-card-content>
+        <form #agencyForm="ngForm" (ngSubmit)="searchAgencies()">
+          <legend>Filter by name</legend>
+          <md-input-container class="agency-input-container" floatPlaceholder="never">
+            <input mdInput placeholder="Enter name" [(ngModel)]='filter.name' name='filter_name'>
+          </md-input-container>
 
+          <legend>Filter by tag</legend>
+          <md-input-container class="agency-input-container" floatPlaceholder='never'>
+            <input mdInput placeholder="Tags" [(ngModel)]='filter.tag' name='filter_tags'>
+          </md-input-container>
+          <button type='submit' md-raised-button color="primary">Search</button>
+        </form>
+      </md-card-content>
+    </md-card>
+    
+    <md-card class='agency-form-card'>
+      <md-card-header class='form-header'>
+        <md-card-title class='heading'><h3>Add An Agency</h3></md-card-title>
       </md-card-header>
       <md-card-content>
         <form #agencyForm="ngForm" (ngSubmit)="saveAgency()">
@@ -44,10 +64,8 @@
               {{grade.value}}
             </md-option>
           </md-select>
-          <button type="submit" md-raised-button color="primary" [disabled]="!agencyForm.form.valid">Create</button>
+          <button type="submit" md-raised-button color="primary" [disabled]="!agencyForm.form.valid">Submit</button>
         </form>
       </md-card-content>
-      <md-card-actions>
-      </md-card-actions>
     </md-card>
 </div>

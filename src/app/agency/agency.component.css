@@ -22,7 +22,7 @@
   padding: 15px 15px 0 0;
 }
 /deep/.mat-card-content {
-  padding: 20px;
+  padding: 10px;
 }
 .header {
   background-color: #E3DFDE;
@@ -35,4 +35,10 @@
   float: left;
   margin-top: 30px;
   color: gray;
+}
+.form-header {
+  background-color: #9BC8FB;
+}
+.agency-form-card {
+  padding: 0;
 }
