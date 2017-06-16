@@ -31,22 +31,29 @@ export class AgencyComponent implements OnInit {
 
   
   saveAgency(agency:any):void {
-    this.agencyService.createAgency(this.agency)
-                      .subscribe(
-                        data => {
-                            this.snackBar.open('Agency Created', '', {
-                            duration: 2000,
+    if(this.agencyForm.valid) {
+      this.agencyService.createAgency(this.agency)
+                        .subscribe(
+                            data => {
+                              this.snackBar.open('Agency Created', '', {
+                              duration: 2000,
+                            });
+                            this.filter = {name: '', tag: ''};
+                            this.searchAgencies(this.filter);
+                          },
+                          error =>  {
+                            this.errorMessage = <any>error;
+                            this.snackBar.open(this.errorMessage, '', {
+                              duration: 2000,
+                            });
                           });
-                          this.filter = {name: '', tag: ''};
-                          this.searchAgencies(this.filter);
-                  
-                        },
-                        error =>  {
-                          this.errorMessage = <any>error;
-                          this.snackBar.open(this.errorMessage, '', {
-                            duration: 2000,
-                          });
-                        });
+    }
+    else {
+      this.errorMessage = 'Invalid form';
+      this.snackBar.open(this.errorMessage, '', {
+        duration: 2000,
+      });
+    }
   }
 
   searchAgencies(filter:any):void {
