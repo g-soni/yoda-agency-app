@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { AgencyComponent } from './agency/agency.component';
 import { AgencyService } from './agency/agency.service';
 import { sortByGradePipe } from './agency/sort-by-grade.pipe';
+import { UIRouterModule } from '@uirouter/angular';
+import { APP_STATES } from './app.states';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,11 @@ import { sortByGradePipe } from './agency/sort-by-grade.pipe';
     FormsModule,
     HttpModule,
     MaterialModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    UIRouterModule.forRoot({
+      states: APP_STATES,
+      otherwise: { state: 'agency' },
+    }),
   ],
   providers: [AgencyService, sortByGradePipe],
   bootstrap: [AppComponent]

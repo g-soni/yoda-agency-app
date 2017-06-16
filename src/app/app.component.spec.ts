@@ -9,11 +9,12 @@ import { AgencyService } from './agency/agency.service';
 import { sortByGradePipe } from './agency/sort-by-grade.pipe';
 import { FormsModule }   from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UIRouterModule } from '@uirouter/angular';
 
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-     imports: [ MaterialModule, HttpModule, FormsModule, NoopAnimationsModule ],
+     imports: [ MaterialModule, HttpModule, FormsModule, NoopAnimationsModule, UIRouterModule.forRoot({ useHash: true }) ],
       declarations: [
         AppComponent,
         AgencyComponent,
@@ -28,12 +29,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  }));
-
-  it(`should render title 'Yoda Agency'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('agency-section').textContent).toContain('Yoda Agency');
   }));
 });
